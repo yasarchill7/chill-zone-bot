@@ -366,3 +366,11 @@ async def on_command_error(ctx, error):
         return
     print(f"Command error: {type(error).__name__}: {error}")
 
+
+# Start the Discord bot
+token = os.getenv("DISCORD_BOT_TOKEN")
+
+if not token:
+    raise RuntimeError("DISCORD_BOT_TOKEN is missing!")
+
+bot.run(token)
