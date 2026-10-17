@@ -169,9 +169,24 @@ async def play(ctx, *, query: str):
     voice = ctx.guild.voice_client
 
     if voice is None:
+    try:
         voice = await channel.connect()
-    elif voice.channel != channel:
+    except Exception as e:
+        print(f"VOICE CONNECTION ERROR: {type(e).__name__}: {e}")
+        await ctx.send(
+            f"Voice connection error: {type(e).__name__}: {e}"
+        )
+        return
+
+elif voice.channel != channel:
+    try:
         await voice.move_to(channel)
+    except Exception as e:
+        print(f"VOICE MOVE ERROR: {type(e).__name__}: {e}")
+        await ctx.send(
+            f"Voice move error: {type(e).__name__}: {e}"
+        )
+        return
 
     await ctx.send("Finding your music... 🎵")
 
